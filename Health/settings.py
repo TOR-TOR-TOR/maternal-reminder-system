@@ -39,10 +39,40 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #my apps
-    'core',
-    'patients',
+    
     'rest_framework',
+    'rest_framework.authtoken',
+    'django_extensions',
+    'core',
+    'users',
+    'profiles',
+    
+    
 ]
+
+AUTH_USER_MODEL = "users.User"
+
+AUTHENTICATION_BACKENDS = [
+    
+    'django.contrib.auth.backends.ModelBackend',  # fallback
+]
+
+
+REST_FRAMEWORK = {
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    
+   """  'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',  # allows login via browsable API
+        'rest_framework.authentication.TokenAuthentication',    # keeps token auth
+    ],"""
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,12 +155,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 

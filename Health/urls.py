@@ -16,8 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# project/urls.py
+#from users.views import UserViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/patients/', include('patients.urls')),  # <-- include our patients API
+    
+
+    # API endpoints for each app
+    path('api/core/', include('core.urls')),          # Core app endpoints
+    path('api/profiles/', include('profiles.urls')),  # Profiles app endpoints
+    path("api/users/", include("users.urls")),
+   
+
 ]
