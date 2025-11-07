@@ -46,8 +46,17 @@ INSTALLED_APPS = [
     'core',
     'users',
     'profiles',
+    'pregnancies',
+    'visits',
+    'reminders',
+    'django_crontab', # automate reminders
     
-    
+]
+
+
+CRONJOBS = [
+    ('0 8 * * *', 'reminders.cron.send_due_reminders'),  # Every day at 8 AM
+     ('* * * * *', 'reminders.cron.send_due_reminders'), # every minute reminder sent
 ]
 
 AUTH_USER_MODEL = "users.User"

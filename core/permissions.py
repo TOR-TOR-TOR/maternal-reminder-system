@@ -52,3 +52,23 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         
         # Write permissions only for the object's owner
         return obj == request.user
+from rest_framework import permissions
+
+class IsHealthWorkerOrAdmin(permissions.BasePermission):
+    """
+    Custom permission to allow only health workers or admins to perform write actions.
+    Mothers can only read their own records.
+    """
+
+    def has_permission(self, request, view):
+        user = request.user
+        # Must be authenticated to do anything
+        if not user or not user.is_authenticated:
+            return False
+
+        # Allow safe methods (GET, HEAD, OPTIONS) for everyone authenticated
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # Allow write methods only for health workers or admins
+        return hasattr(user, 'health_worker_profile') or user.is_staff

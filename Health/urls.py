@@ -15,9 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 # project/urls.py
 #from users.views import UserViewSet
+
+from visits.views import VisitViewSet  # example
+from pregnancies.views import PregnancyViewSet
+
+router = DefaultRouter()
+router.register(r'visits', VisitViewSet, basename='visit')
+router.register(r'pregnancies', PregnancyViewSet, basename='pregnancy')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,8 +33,10 @@ urlpatterns = [
 
     # API endpoints for each app
     path('api/core/', include('core.urls')),          # Core app endpoints
+    path('api/', include(router.urls)),  # 👈 main API routes
     path('api/profiles/', include('profiles.urls')),  # Profiles app endpoints
     path("api/users/", include("users.urls")),
-   
-
+    path('api/visits/', include('visits.urls')),
+    path('api/pregnancies/', include('pregnancies.urls')),
+    path('api/reminders/', include('reminders.urls')), 
 ]
